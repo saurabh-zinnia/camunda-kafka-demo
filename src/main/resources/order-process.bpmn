@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0sng1lw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="order-process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_OrderReceived" name="Order received via Kafka">
+      <bpmn:outgoing>Flow_1fdptq6</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_Order" messageRef="Message_OrderDemo" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1fdptq6" sourceRef="StartEvent_OrderReceived" targetRef="Task_ProcessOrderData" />
+    <bpmn:serviceTask id="Task_ProcessOrderData" name="Process order data" camunda:delegateExpression="#{orderProcessingDelegate}">
+      <bpmn:incoming>Flow_1fdptq6</bpmn:incoming>
+      <bpmn:outgoing>Flow_ProcessOrderData</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_ProcessOrderData" sourceRef="Task_ProcessOrderData" targetRef="Task_ProcessOrder" />
+    <bpmn:userTask id="Task_ProcessOrder" name="Process order">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="orderOk" label="Order OK?" type="boolean" defaultValue="true" />
+          <camunda:formField id="customerId" label="Customer ID" type="string" />
+          <camunda:formField id="orderValue" label="Order Value" type="long" />
+          <camunda:formField id="customerEmail" label="Customer Email" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ProcessOrderData</bpmn:incoming>
+      <bpmn:outgoing>Flow_09pto53</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0yblx89" name="Order ok?" default="Flow_09zvyuj">
+      <bpmn:incoming>Flow_09pto53</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ybm98q</bpmn:outgoing>
+      <bpmn:outgoing>Flow_09zvyuj</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_09pto53" sourceRef="Task_ProcessOrder" targetRef="Gateway_0yblx89" />
+    <bpmn:sequenceFlow id="Flow_1ybm98q" name="yes" sourceRef="Gateway_0yblx89" targetRef="Task_DeliverOrder">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${orderOk}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_OrderCancelled" name="Order cancelled">
+      <bpmn:incoming>Flow_09zvyuj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09zvyuj" name="no" sourceRef="Gateway_0yblx89" targetRef="Event_OrderCancelled" />
+    <bpmn:endEvent id="Event_OrderProcessed" name="Order processed">
+      <bpmn:incoming>Flow_EmailSent</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_DeliverOrder" name="Deliver order">
+      <bpmn:incoming>Flow_1ybm98q</bpmn:incoming>
+      <bpmn:outgoing>Flow_DeliverToTimer</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_DeliverToTimer" sourceRef="Task_DeliverOrder" targetRef="Timer_EmailDelay" />
+    <bpmn:intermediateCatchEvent id="Timer_EmailDelay" name="Wait 2 minutes">
+      <bpmn:incoming>Flow_DeliverToTimer</bpmn:incoming>
+      <bpmn:outgoing>Flow_TimerToEmail</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_TimerToEmail" sourceRef="Timer_EmailDelay" targetRef="Task_SendEmail" />
+    <bpmn:serviceTask id="Task_SendEmail" name="Send delivery confirmation email" camunda:delegateExpression="#{emailDeliveryDelegate}">
+      <bpmn:incoming>Flow_TimerToEmail</bpmn:incoming>
+      <bpmn:outgoing>Flow_EmailSent</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_EmailSent" sourceRef="Task_SendEmail" targetRef="Event_OrderProcessed" />
+  </bpmn:process>
+  <bpmn:message id="Message_OrderDemo" name="MessageOrderDemo" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
+      <bpmndi:BPMNShape id="Event_1p7iuje_di" bpmnElement="StartEvent_OrderReceived">
+        <dc:Bounds x="162" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="146" y="165" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1fdptq6_di" bpmnElement="Flow_1fdptq6">
+        <di:waypoint x="198" y="140" />
+        <di:waypoint x="230" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_ProcessOrderData_di" bpmnElement="Task_ProcessOrderData">
+        <dc:Bounds x="230" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_ProcessOrderData_di" bpmnElement="Flow_ProcessOrderData">
+        <di:waypoint x="330" y="140" />
+        <di:waypoint x="360" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0zcrfq1_di" bpmnElement="Task_ProcessOrder">
+        <dc:Bounds x="360" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0yblx89_di" bpmnElement="Gateway_0yblx89" isMarkerVisible="true">
+        <dc:Bounds x="515" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="517" y="91" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09pto53_di" bpmnElement="Flow_09pto53">
+        <di:waypoint x="460" y="140" />
+        <di:waypoint x="515" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ybm98q_di" bpmnElement="Flow_1ybm98q">
+        <di:waypoint x="565" y="140" />
+        <di:waypoint x="620" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="585" y="122" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_11hx5fq_di" bpmnElement="Event_OrderCancelled">
+        <dc:Bounds x="522" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="502" y="275" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09zvyuj_di" bpmnElement="Flow_09zvyuj">
+        <di:waypoint x="540" y="165" />
+        <di:waypoint x="540" y="232" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="549" y="195" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0gxl7vq_di" bpmnElement="Event_OrderProcessed">
+        <dc:Bounds x="1062" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042" y="165" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xyaln8_di" bpmnElement="Task_DeliverOrder">
+        <dc:Bounds x="620" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_DeliverToTimer_di" bpmnElement="Flow_DeliverToTimer">
+        <di:waypoint x="720" y="140" />
+        <di:waypoint x="782" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0fxe7zx_di" bpmnElement="Timer_EmailDelay">
+        <dc:Bounds x="782" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="763" y="165" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_TimerToEmail_di" bpmnElement="Flow_TimerToEmail">
+        <di:waypoint x="818" y="140" />
+        <di:waypoint x="880" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0m2lzow_di" bpmnElement="Task_SendEmail">
+        <dc:Bounds x="880" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_EmailSent_di" bpmnElement="Flow_EmailSent">
+        <di:waypoint x="980" y="140" />
+        <di:waypoint x="1062" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
