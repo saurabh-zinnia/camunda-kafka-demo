@@ -4,12 +4,18 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.18</version>
-    <relativePath/>
-  </parent>
+<!--  <parent>-->
+<!--    <groupId>org.springframework.boot</groupId>-->
+<!--    <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--    <version>2.7.18</version>-->
+<!--    <relativePath/>-->
+<!--  </parent>-->
+    <parent>
+        <groupId>com.se2.otp</groupId>
+        <artifactId>otp-bpm-parent</artifactId>
+        <version>2.1.0-RELEASE</version>
+        <relativePath />
+    </parent>
 
   <dependencyManagement>
     <dependencies>
@@ -45,6 +51,8 @@
   <groupId>org.camunda.bpm.demo</groupId>
   <artifactId>kakfa-demo</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <name>Camunda Kafka Demo</name>
+  <description>Camunda Kafka Demo</description>
 
   <dependencies>
     <dependency>
@@ -97,7 +105,7 @@
     <!-- Test Dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
+      <artifactId>spring-boot-starter-test</artifactId>    
       <scope>test</scope>
     </dependency>
     
@@ -105,24 +113,58 @@
       <groupId>org.springframework.kafka</groupId>
       <artifactId>spring-kafka-test</artifactId>
       <scope>test</scope>
+      <version>${spring-kafka.version}</version>
     </dependency>
     
     <dependency>
       <groupId>org.camunda.bpm.assert</groupId>
       <artifactId>camunda-bpm-assert</artifactId>
-      <version>15.0.0</version>
       <scope>test</scope>
     </dependency>
-    
-
     
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
-      <version>4.2.0</version>
       <scope>test</scope>
     </dependency>
-
+    
+    <!-- Override Kafka test dependencies to ensure version consistency -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>${kafka.version}</version>
+      <classifier>test</classifier>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka_2.13</artifactId>
+      <version>${kafka.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka_2.13</artifactId>
+      <version>${kafka.version}</version>
+      <classifier>test</classifier>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-streams</artifactId>
+      <version>${kafka.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-streams-test-utils</artifactId>
+      <version>${kafka.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
