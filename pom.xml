@@ -135,6 +135,13 @@
       <scope>test</scope>
     </dependency>
     
+    <dependency>
+      <groupId>org.camunda.community.process_test_coverage</groupId>
+      <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
+      <version>2.7.0</version>
+      <scope>test</scope>
+    </dependency>
+    
     <!-- Override Kafka test dependencies to ensure version consistency -->
     <dependency>
       <groupId>org.apache.kafka</groupId>
@@ -266,6 +273,20 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.11.0.3922</version>
 			</plugin>
+			
+			<plugin>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+        <version>2.7.0</version>
+        <executions>
+          <execution>
+            <id>aggregate-reports</id>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 

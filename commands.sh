@@ -16,3 +16,10 @@ docker run --rm -it --network host \
 docker run --rm -it --network host \
   confluentinc/cp-kafka:7.4.0 \
   kafka-console-consumer --bootstrap-server localhost:9092 --topic intermediate-message-topic --from-beginning
+
+# Run single working test and generate reports
+mvn test -Dtest=DataFormatProcessCoverageTest#testDataFormatProcess_XmlPath_ShouldGenerateCoverageReport
+
+# Aggregate coverage reports
+mvn org.camunda.community.process_test_coverage:camunda-process-test-coverage-report-aggregator-maven-plugin:2.7.0:aggregate
+
