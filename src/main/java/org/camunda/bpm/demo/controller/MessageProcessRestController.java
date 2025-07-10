@@ -25,4 +25,9 @@ public class MessageProcessRestController {
     public void startOrderProcess(@RequestBody CamundaMessageDto camundaMessageDto){
         kafkaTemplate.send("order-process-message-topic", camundaMessageDto);
     }
+
+    @PostMapping("/dataformat")
+    public void startDataFormatProcess(@RequestBody CamundaMessageDto camundaMessageDto){
+        kafkaTemplate.send("data-format-process-message-topic", camundaMessageDto);
+    }
 }

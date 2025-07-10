@@ -16,6 +16,7 @@ public class MessageProcessConsumer {
     private final MessageService messageService;
     private final static String MESSAGE_START = "MessageKafkaDemo";
     private final static String MESSAGE_ORDER = "MessageOrderDemo";
+    private final static String MESSAGE_DATAFORMAT = "MessageDataFormatDemo";
 
     @KafkaListener(topics = "start-process-message-topic")
     public void startMessageProcess(CamundaMessageDto camundaMessageDto){
@@ -25,5 +26,10 @@ public class MessageProcessConsumer {
     @KafkaListener(topics = "order-process-message-topic")
     public void startOrderProcess(CamundaMessageDto camundaMessageDto){
         messageService.correlateMessage(camundaMessageDto, MESSAGE_ORDER);
+    }
+
+    @KafkaListener(topics = "data-format-process-message-topic")
+    public void startDataFormatProcess(CamundaMessageDto camundaMessageDto){
+        messageService.correlateMessage(camundaMessageDto, MESSAGE_DATAFORMAT);
     }
 }

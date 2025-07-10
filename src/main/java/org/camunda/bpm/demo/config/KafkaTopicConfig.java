@@ -37,4 +37,9 @@ public class KafkaTopicConfig {
     public NewTopic orderProcessMessageTopic() {
         return new NewTopic("order-process-message-topic", 1, (short) 1);
     }
+
+    @Bean
+    public NewTopic dataFormatProcessMessageTopic() {
+        return new NewTopic("data-format-process-message-topic", 1, (short) 1);
+    }
 }
