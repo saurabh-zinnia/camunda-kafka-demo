@@ -128,6 +128,13 @@
       <scope>test</scope>
     </dependency>
     
+    <dependency>
+      <groupId>org.camunda.bpm.extension</groupId>
+      <artifactId>camunda-bpm-assert-scenario</artifactId>
+      <version>1.1.1</version>
+      <scope>test</scope>
+    </dependency>
+    
     <!-- Override Kafka test dependencies to ensure version consistency -->
     <dependency>
       <groupId>org.apache.kafka</groupId>
