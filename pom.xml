@@ -47,7 +47,7 @@
 		<!-- <sonar.sources>src/main/java,src/main/resources</sonar.sources> -->
 		<sonar.tests>src/test/java</sonar.tests>
 		<sonar.java.binaries>target/classes</sonar.java.binaries>
-    <sonar.process-test-coverage.jsonReportPaths>target/process-test-coverage/**/report.json</sonar.process-test-coverage.jsonReportPaths>
+
   </properties>
 
   <groupId>org.camunda.bpm.demo</groupId>
@@ -144,12 +144,7 @@
       <scope>test</scope>
     </dependency>
     
-    <!-- SonarQube plugin for process test coverage -->
-    <dependency>
-      <groupId>org.camunda.community.process_test_coverage</groupId>
-      <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
-      <version>${camunda-process-test-coverage.version}</version>
-    </dependency>
+
     
     <!-- Override Kafka test dependencies to ensure version consistency -->
     <dependency>
