@@ -11,6 +11,7 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
+@ExcludeFromProcessCoverage
 class KafkaProcessIntegrationTest extends BaseIntegrationTest {
 
     @Autowired

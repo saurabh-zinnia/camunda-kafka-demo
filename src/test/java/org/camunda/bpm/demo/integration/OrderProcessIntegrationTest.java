@@ -8,6 +8,7 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureWebMvc
 @AutoConfigureMockMvc
+@ExcludeFromProcessCoverage
 class OrderProcessIntegrationTest extends BaseIntegrationTest {
 
     private static final int TIMEOUT_SECONDS = 15;

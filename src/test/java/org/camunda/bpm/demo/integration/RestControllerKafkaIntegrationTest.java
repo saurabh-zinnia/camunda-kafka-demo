@@ -8,6 +8,7 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,8 +29,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Integration tests for REST controller and Kafka message processing
+ * This tests the full flow from REST API to Kafka message to process execution
+ */
 @AutoConfigureWebMvc
 @AutoConfigureMockMvc
+@ExcludeFromProcessCoverage
 class RestControllerKafkaIntegrationTest extends BaseIntegrationTest {
 
     @Autowired

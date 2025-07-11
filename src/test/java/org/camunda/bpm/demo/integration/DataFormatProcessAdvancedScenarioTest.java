@@ -7,6 +7,7 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.scenario.ProcessScenario;
 import org.camunda.bpm.scenario.Scenario;
+import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.*;
  */
 @ExtendWith(MockitoExtension.class)
 @Deployment(resources = "data-format.bpmn")
+@ExcludeFromProcessCoverage
 public class DataFormatProcessAdvancedScenarioTest extends BaseIntegrationTest {
 
     @Autowired
