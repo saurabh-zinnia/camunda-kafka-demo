@@ -47,6 +47,8 @@
 		<!-- <sonar.sources>src/main/java,src/main/resources</sonar.sources> -->
 		<sonar.tests>src/test/java</sonar.tests>
 		<sonar.java.binaries>target/classes</sonar.java.binaries>
+		<!-- Remove custom process test coverage configuration to let plugin use defaults -->
+		<sonar.process-test-coverage.jsonReportPaths></sonar.process-test-coverage.jsonReportPaths>
 
   </properties>
 
