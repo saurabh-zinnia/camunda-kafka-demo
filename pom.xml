@@ -35,6 +35,7 @@
     <spring-kafka.version>2.9.13</spring-kafka.version>
     <kafka.version>3.1.2</kafka.version>
     <camunda.version>7.14.0-ee</camunda.version>
+    <camunda-process-test-coverage.version>2.7.0</camunda-process-test-coverage.version>
     <h2.version>1.4.200</h2.version>
     <sonar.projectKey>camunda-kafka-demo</sonar.projectKey>
 		<sonar.projectName>Camunda Kafka Demo</sonar.projectName>
@@ -43,9 +44,10 @@
 		<!-- <sonar.token>${env.SONAR_TOKEN}</sonar.token> -->
     <sonar.token>squ_d41130029f4520d1d284fd2e347577caf20a304a</sonar.token>
 		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-		<sonar.sources>src/main/java</sonar.sources>
+		<!-- <sonar.sources>src/main/java,src/main/resources</sonar.sources> -->
 		<sonar.tests>src/test/java</sonar.tests>
 		<sonar.java.binaries>target/classes</sonar.java.binaries>
+    <sonar.process-test-coverage.jsonReportPaths>target/process-test-coverage/**/report.json</sonar.process-test-coverage.jsonReportPaths>
   </properties>
 
   <groupId>org.camunda.bpm.demo</groupId>
@@ -138,8 +140,15 @@
     <dependency>
       <groupId>org.camunda.community.process_test_coverage</groupId>
       <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
-      <version>2.7.0</version>
+      <version>${camunda-process-test-coverage.version}</version>
       <scope>test</scope>
+    </dependency>
+    
+    <!-- SonarQube plugin for process test coverage -->
+    <dependency>
+      <groupId>org.camunda.community.process_test_coverage</groupId>
+      <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
+      <version>${camunda-process-test-coverage.version}</version>
     </dependency>
     
     <!-- Override Kafka test dependencies to ensure version consistency -->
@@ -277,7 +286,7 @@
 			<plugin>
         <groupId>org.camunda.community.process_test_coverage</groupId>
         <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
-        <version>2.7.0</version>
+        <version>${camunda-process-test-coverage.version}</version>
         <executions>
           <execution>
             <id>aggregate-reports</id>
