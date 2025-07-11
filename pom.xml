@@ -35,7 +35,7 @@
     <spring-kafka.version>2.9.13</spring-kafka.version>
     <kafka.version>3.1.2</kafka.version>
     <camunda.version>7.14.0-ee</camunda.version>
-    <camunda-process-test-coverage.version>2.7.0</camunda-process-test-coverage.version>
+    		<camunda-process-test-coverage.version>2.8.1</camunda-process-test-coverage.version>
     <h2.version>1.4.200</h2.version>
     <sonar.projectKey>camunda-kafka-demo</sonar.projectKey>
 		<sonar.projectName>Camunda Kafka Demo</sonar.projectName>
@@ -44,7 +44,7 @@
 		<!-- <sonar.token>${env.SONAR_TOKEN}</sonar.token> -->
     <sonar.token>squ_d41130029f4520d1d284fd2e347577caf20a304a</sonar.token>
 		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-		<sonar.sources>src/main/java,src/main/resources</sonar.sources>
+		<sonar.sources>src/main,pom.xml</sonar.sources>
 		<sonar.tests>src/test/java</sonar.tests>
 		<sonar.java.binaries>target/classes</sonar.java.binaries>
 		<!-- Remove custom process test coverage configuration to let plugin use defaults -->
