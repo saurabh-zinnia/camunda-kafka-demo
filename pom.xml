@@ -35,7 +35,7 @@
     <spring-kafka.version>2.9.13</spring-kafka.version>
     <kafka.version>3.1.2</kafka.version>
     <camunda.version>7.14.0-ee</camunda.version>
-    		<camunda-process-test-coverage.version>2.8.0</camunda-process-test-coverage.version>
+    <camunda-process-test-coverage.version>2.7.0</camunda-process-test-coverage.version>
     <h2.version>1.4.200</h2.version>
     <sonar.projectKey>camunda-kafka-demo</sonar.projectKey>
 		<sonar.projectName>Camunda Kafka Demo</sonar.projectName>
