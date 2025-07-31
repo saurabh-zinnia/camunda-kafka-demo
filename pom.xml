@@ -42,7 +42,7 @@
 		<sonar.projectVersion>1.0</sonar.projectVersion>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 		<!-- <sonar.token>${env.SONAR_TOKEN}</sonar.token> -->
-    <sonar.token>squ_d41130029f4520d1d284fd2e347577caf20a304a</sonar.token>
+    <sonar.token>squ_eecd6f26f32949b316b23bae88821f8b09655c65</sonar.token>
 		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.sources>src/main,pom.xml</sonar.sources>
 		<sonar.tests>src/test/java</sonar.tests>

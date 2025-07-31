@@ -24,6 +24,14 @@ camunda.bpm:
   history-level: full
   job-execution:
     enabled: true
+  generic-properties:
+      properties:
+        historyCleanupStrategy: removalTimeBased
+        historyRemovalTimeStrategy: end  # Base removal time on instance end time
+        historyCleanupBatchWindowStartTime: "01:00"  # Off-peak hours
+        historyCleanupBatchWindowEndTime: "05:00"
+        historyCleanupBatchSize: 500     # Max instances per transaction
+        historyCleanupDegreeOfParallelism: 4
 
 kafka:
   bootstrap-address: localhost:9092

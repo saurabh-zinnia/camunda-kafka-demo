@@ -37,6 +37,19 @@ public class KafkaProducerConfig {
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 JsonSerializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, trustedPackage);
+        
+        // Add reliability and compatibility configurations
+        props.put(ProducerConfig.ACKS_CONFIG, "1"); // Wait for leader acknowledgment
+        props.put(ProducerConfig.RETRIES_CONFIG, 3);
+        props.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, 1000);
+        props.put(ProducerConfig.RECONNECT_BACKOFF_MS_CONFIG, 1000);
+        props.put(ProducerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG, 10000);
+        props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);
+        props.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 120000);
+        props.put(ProducerConfig.LINGER_MS_CONFIG, 5);
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
+        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
+        
         return new DefaultKafkaProducerFactory<>(props);
     }
 

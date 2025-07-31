@@ -44,6 +44,21 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 JsonDeserializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, trustedPackage);
+        
+        // Add compatibility and retry configurations
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 30000);
+        props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, 10000);
+        props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 300000);
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 500);
+        props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, 1);
+        props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 500);
+        props.put(ConsumerConfig.RETRY_BACKOFF_MS_CONFIG, 1000);
+        props.put(ConsumerConfig.RECONNECT_BACKOFF_MS_CONFIG, 1000);
+        props.put(ConsumerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG, 10000);
+        
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
@@ -54,6 +69,11 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, CamundaMessageDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        
+        // Add error handling configuration
+        factory.setCommonErrorHandler(null); // Use default error handler
+        factory.getContainerProperties().setMissingTopicsFatal(false);
+        
         return factory;
     }
 }
